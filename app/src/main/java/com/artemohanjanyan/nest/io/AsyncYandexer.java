@@ -74,21 +74,23 @@ public class AsyncYandexer extends AsyncTask<String, Void, SearchResult> {
 
     @Override
     protected void onPostExecute(SearchResult result) {
-        NotificationManagerCompat.from(context).notify(0, new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.ic_notification)
-                .setLargeIcon(BitmapFactory
-                        .decodeResource(context.getResources(), R.mipmap.ic_launcher))
+        if (result != null) {
+            NotificationManagerCompat.from(context).notify(0, new NotificationCompat.Builder(context)
+                    .setSmallIcon(R.drawable.ic_notification)
+                    .setLargeIcon(BitmapFactory
+                            .decodeResource(context.getResources(), R.mipmap.ic_launcher))
 
-                .setContentTitle(result.getTitle())
-                .setContentText(result.getDescription())
-                .setContentIntent(PendingIntent.getActivity(context, 0,
-                        new Intent(Intent.ACTION_VIEW, Uri.parse(result.getLink())), 0))
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(result.getDescription()))
+                    .setContentTitle(result.getTitle())
+                    .setContentText(result.getDescription())
+                    .setContentIntent(PendingIntent.getActivity(context, 0,
+                            new Intent(Intent.ACTION_VIEW, Uri.parse(result.getLink())), 0))
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(result.getDescription()))
 
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setPriority(NotificationCompat.PRIORITY_MAX)
+                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                    .setPriority(NotificationCompat.PRIORITY_MAX)
 
-                .build());
+                    .build());
+        }
         context = null;
     }
 }
